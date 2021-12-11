@@ -1,0 +1,209 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="19.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{0FDBE7EB-028D-4E17-9213-6B198C0A1183}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>BatchRename</RootNamespace>
+    <AssemblyName>BatchRename</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>app.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="BatchRenameOptionsDialog.xaml.cs">
+      <DependentUpon>BatchRenameOptionsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FileBatchRenameManager.cs" />
+    <Compile Include="ChangesAlertDialog.xaml.cs">
+      <DependentUpon>ChangesAlertDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FilePathChangedDialog.xaml.cs">
+      <DependentUpon>FilePathChangedDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FinishedRenameDialog.xaml.cs">
+      <DependentUpon>FinishedRenameDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="FolderBatchRenameManager.cs" />
+    <Compile Include="FullnameNormalizeOperation.cs" />
+    <Compile Include="MoveOperation.cs" />
+    <Compile Include="MoveOperationDialog.xaml.cs">
+      <DependentUpon>MoveOperationDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NewCaseOperation.cs" />
+    <Compile Include="NewCaseOperationDialog.xaml.cs">
+      <DependentUpon>NewCaseOperationDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="NoEditAvailableDialog.xaml.cs">
+      <DependentUpon>NoEditAvailableDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ReplaceOperation.cs" />
+    <Compile Include="ReplaceOperationDialog.xaml.cs">
+      <DependentUpon>ReplaceOperationDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StringOperation.cs" />
+    <Compile Include="UniqueNameOperation.cs" />
+    <Compile Include="UtilsClass\DelegateCommand.cs" />
+    <Compile Include="UtilsClass\FileAndFolder.cs" />
+    <Page Include="BatchRenameOptionsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChangesAlertDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FilePathChangedDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="FinishedRenameDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="MoveOperationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NewCaseOperationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="NoEditAvailableDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ReplaceOperationDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\appbar_open.png" />
+    <Resource Include="Assets\appbar_save.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\appbar_add.png" />
+    <Resource Include="Assets\appbar_options.png" />
+    <Resource Include="Assets\appbar_start_batch.png" />
+    <Resource Include="Assets\appbar_delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\appbar_refresh.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\appbar_arrow_down.png" />
+    <Resource Include="Assets\appbar_arrow_up.png" />
+    <Resource Include="Assets\appbar_down_bottom.png" />
+    <Resource Include="Assets\appbar_up_top.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\appbar_method_add.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\appbar_exclude.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\app_configuration.png" />
+    <Resource Include="Assets\app.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\appbar_preview.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="app.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

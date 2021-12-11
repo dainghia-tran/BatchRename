@@ -1,0 +1,14 @@
+﻿<Window x:Class="BatchRename.FilePathChangedDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BatchRename"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="FilePathChangedDialog" Height="180" Width="350">
+    <Canvas>
+        <TextBlock TextWrapping="Wrap" Text="The paths of the files or folders have changed. It may due to the fact that BatchRename has changed the file or folder names. Please refresh the page before continue" Canvas.Left="25" Canvas.Top="31" Width="290"></TextBlock>
+        <Button Content="OK" IsCancel="True" Width="75" Height="28" Canvas.Left="126" Canvas.Top="100"></Button>
+    </Canvas>
+</Window>

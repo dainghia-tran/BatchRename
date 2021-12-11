@@ -1,0 +1,14 @@
+﻿<Window x:Class="BatchRename.NoEditAvailableDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BatchRename"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Configuration" Height="120" Width="300">
+    <Canvas>
+        <TextBlock Text="No Edit options available for this operation" Canvas.Left="30" Canvas.Top="21"></TextBlock>
+        <Button Content="OK" IsCancel="True" Width="75" Height="28" Canvas.Left="104" Canvas.Top="52"></Button>
+    </Canvas>
+</Window>

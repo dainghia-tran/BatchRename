@@ -1,0 +1,27 @@
+﻿<Window x:Class="BatchRename.BatchRenameOptionsDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BatchRename"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Icon="Assets/app_configuration.png"
+        Title="Batch Rename Options" Height="233.2" Width="494.4">
+    <Canvas>
+        <GroupBox x:Name="CaseRadioButtons" Header="Handling Duplicate" Canvas.Left="63" Canvas.Top="22" Padding="5">
+            <StackPanel>
+                <TextBlock Height="25">Choose the action when BatchRename encounter duplicate names:</TextBlock>
+                <RadioButton Name ="CaseRadioButton1" GroupName="Case" Content="Numbering the duplicate names" ToolTip="Ex: Image.jpg, Image_1.jpg, Image_2.jpg...." IsChecked="True" Margin="0,0,0,10"/>
+                <RadioButton Name ="CaseRadioButton2" GroupName="Case" Content="Keep the old names" ToolTip="The duplicated names will be revert back to old names" Margin="0,0,0,10"/>
+            </StackPanel>
+        </GroupBox>
+        <Button Name="SaveButton" Click="SaveButton_Click" Canvas.Left="120" Canvas.Top="152" Width="75" Height="28" >
+            Save
+        </Button>
+
+        <Button Name="CancelButton" Canvas.Left="266" Canvas.Top="152" Width="76" Height="28" IsCancel="True">
+            Cancel
+        </Button>
+    </Canvas>
+</Window>

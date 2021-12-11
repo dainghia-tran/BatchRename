@@ -1,0 +1,440 @@
+﻿<Window x:Class="BatchRename.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:BatchRename"
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d"
+        Icon="Assets/app.png"
+        Title="Batch Rename" Height="450" Width="800" ResizeMode="NoResize">
+    <Window.Resources>
+
+        <Style x:Key="DefaultButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.5"/>
+                    <Setter Property="Cursor" Value="None"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#ffffff" Offset="0" />
+                                <GradientStop Color="#649fd1" Offset="1" />
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DefaultOperationButton" TargetType="{x:Type Button}">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border CornerRadius="15" Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.5"/>
+                    <Setter Property="Cursor" Value="None"/>
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                <GradientStop Color="#ffffff" Offset="0" />
+                                <GradientStop Color="#649fd1" Offset="1" />
+                            </LinearGradientBrush>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="DefaultTab" TargetType="{x:Type TabItem}">
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TabItem}">
+                        <Border Name="Border" BorderThickness="1,1,1,0" BorderBrush="Gainsboro" CornerRadius="4,4,0,0" Margin="2,0"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter x:Name="ContentSite"
+                                        VerticalAlignment="Center"
+                                        HorizontalAlignment="Center"
+                                        ContentSource="Header"
+                                        Margin="10,2"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#dbdbdb"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="False">
+                                <Setter TargetName="Border" Property="Background" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Cursor" Value="Hand"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="OperationItemStyle" TargetType="{x:Type ListViewItem}">
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                        <Border BorderThickness="1" Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}" CornerRadius="10">
+                            <ContentPresenter/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Background" Value="#dbdbdb" />
+                    <Setter Property="BorderBrush" Value="#9c9c9c" />
+                </Trigger>
+                <Trigger Property="IsSelected" Value="true">
+                    <Setter Property="Background" Value="#9c9c9c" />
+                    <Setter Property="BorderBrush" Value="#dbdbdb" />
+                    <Setter Property="Foreground" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ListViewItemStyle" TargetType="{x:Type ListViewItem}">
+            <Setter Property="Foreground" Value="Black" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="true">
+                    <Setter Property="Background" Value="#dbdbdb" />
+                    <Setter Property="BorderBrush" Value="#9c9c9c" />
+                </Trigger>
+                <Trigger Property="IsSelected" Value="true">
+                    <Setter Property="Background" Value="#9c9c9c" />
+                    <Setter Property="BorderBrush" Value="#dbdbdb" />
+                    <Setter Property="Foreground" Value="White" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="GridViewColumnHeaderGripper" TargetType="Thumb">
+            <Setter Property="Width" Value="18"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Thumb}">
+                        <Border Padding="{TemplateBinding Padding}"
+              Background="Transparent">
+                            <Rectangle HorizontalAlignment="Center"
+                Width="1"
+                Fill="{TemplateBinding Background}"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ListViewHeaderStyle" TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type GridViewColumnHeader}">
+                        <Grid>
+                            <Border BorderThickness="0,0,0,1" BorderBrush="Black" Background="Transparent">
+                                <TextBlock x:Name="ContentHeader" Text="{TemplateBinding Content}" Width="{TemplateBinding Width}" TextAlignment="Center" />
+                            </Border>
+                            <Thumb x:Name = "PART_HeaderGripper"
+                               HorizontalAlignment = "Right"
+                               Margin = "0"
+                              Style = "{StaticResource GridViewColumnHeaderGripper}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="AllowDrop" Value="False"/>
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="MinWidth" Value="120" />
+            <Setter Property="FontSize" Value="13" />
+        </Style>
+
+    </Window.Resources>
+    <DockPanel LastChildFill="True">
+        <Border DockPanel.Dock="Top" BorderBrush="LightGray" BorderThickness="0,0,0,1">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Height="30">
+
+                <Button Name="RefreshButton" Click="RefreshButton_Click" Focusable="False" Style="{DynamicResource DefaultButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Assets/appbar_refresh.png" 
+                                        Width="15" Height="15" Margin="5"
+                                        RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Refresh" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Name="OptionButton" Click="OptionButton_Click" Focusable="False" Style="{DynamicResource DefaultButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Assets/appbar_options.png" 
+                                           Width="15" Height="15" Margin="5"
+                                           RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Options" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Name="PreviewButton" Click="PreviewButton_Click" Focusable="False" Style="{DynamicResource DefaultButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Assets/appbar_preview.png" 
+                                           Width="15" Height="15" Margin="5"
+                                           RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Preview Rename" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    </StackPanel>
+                </Button>
+
+                <Button Name="StartButton" Click="StartButton_Click" Focusable="False" Style="{DynamicResource DefaultButton}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Assets/appbar_start_batch.png" 
+                                           Width="15" Height="15" Margin="5"
+                                           RenderOptions.BitmapScalingMode="HighQuality"/>
+                        <TextBlock Text="Start Batch" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                    </StackPanel>
+                </Button>
+
+            </StackPanel>
+        </Border>
+        <DockPanel DockPanel.Dock="Left" LastChildFill="True" Width="240">
+            <Border BorderBrush="LightGray" BorderThickness="0,0,1,1" DockPanel.Dock="Top">
+                <StackPanel Orientation="Horizontal" Height="30">
+
+                    <Button Click="AddMethodButton_Click" Name="AddMethodButton" Style="{StaticResource DefaultButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Assets/appbar_method_add.png" 
+                                        Width="15" Height="15" Margin="5"
+                                        RenderOptions.BitmapScalingMode="HighQuality"/>
+                            <TextBlock Text="Add Method" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                        </StackPanel>
+                        
+                        <Button.ContextMenu>
+                            <ContextMenu HorizontalAlignment="Center">
+                                <ContextMenu.ItemContainerStyle>
+                                    <Style TargetType="{x:Type MenuItem}">
+                                        <Setter Property="Command"  
+                                       Value="{Binding CreateNewOperation}" />
+                                    </Style>
+                                </ContextMenu.ItemContainerStyle>
+                                <ContextMenu.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Name, Mode=OneWay}"/>
+                                    </DataTemplate>
+                                </ContextMenu.ItemTemplate>
+                            </ContextMenu>
+                        </Button.ContextMenu>
+                        
+                    </Button>
+
+                    <Button Name="UpButton" Focusable="False" Style="{DynamicResource DefaultButton}" Click="DownButton_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Assets/appbar_arrow_down.png" 
+                                           Width="15" Height="15" Margin="5"
+                                           RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Name="UpTopButton" Focusable="False" Style="{DynamicResource DefaultButton}" Click="UpTopButton_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Assets/appbar_up_top.png" 
+                                           Width="15" Height="15" Margin="5"
+                                           RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Name="DownButton" Focusable="False" Style="{DynamicResource DefaultButton}" Click="UpButton_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Assets/appbar_arrow_up.png" 
+                                           Width="15" Height="15" Margin="5"
+                                           RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Name="DownBottomButton" Focusable="False" Style="{DynamicResource DefaultButton}" Click="DownBottomButton_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Assets/appbar_down_bottom.png" 
+                                           Width="15" Height="15" Margin="5"
+                                           RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </StackPanel>
+                    </Button>
+
+                </StackPanel>
+            </Border>
+
+            <Border BorderBrush="LightGray" BorderThickness="0,0,1,1" DockPanel.Dock="Top">
+                <StackPanel Orientation="Horizontal" Height="30">
+
+                    <Button Name="SaveButton" Click="SaveButton_Click" Focusable="False" Style="{DynamicResource DefaultButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Assets/appbar_save.png" 
+                                        Width="15" Height="15" Margin="5"
+                                        RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </StackPanel>
+                    </Button>
+
+                    <Button Name="OpenButton" Click="OpenButton_Click" Focusable="False" Style="{DynamicResource DefaultButton}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Assets/appbar_open.png" 
+                                           Width="15" Height="15" Margin="5"
+                                           RenderOptions.BitmapScalingMode="HighQuality"/>
+                        </StackPanel>
+                    </Button>
+
+                    <TextBlock Text="Preset" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="10,0,10,0"/>
+
+                    <ComboBox Name = "PresetsList"  Height="20" MinWidth="100"   
+                              DropDownClosed="PresetsList_DropDownClosed">
+                        <ComboBox.ItemTemplate>
+                            <ItemContainerTemplate>
+                                <TextBlock Text="{Binding Name}" />
+                            </ItemContainerTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+
+                </StackPanel>
+            </Border>
+
+            <ListView Name="OperationsList" BorderThickness="0" ItemContainerStyle="{StaticResource OperationItemStyle}" Padding="10,2">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical" VerticalAlignment="Center">
+
+                            <StackPanel.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Edit" Click="MenuItem_Click"/>
+                                </ContextMenu>
+                            </StackPanel.ContextMenu>
+
+                            <TextBlock VerticalAlignment="Center" Margin="10,0,5,0" Text="{Binding Name}" FontWeight="Bold"/>
+
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <TextBlock VerticalAlignment="Center" Margin="10,0,5,0" Text="{Binding Description}"
+                                       TextWrapping="Wrap" Width="150"/>
+                                <Button Name="DeleteButton" Focusable="False" Style="{StaticResource DefaultOperationButton}" 
+                                        VerticalAlignment="Center" Click="DeleteButton_Click" Tag="{Binding}">
+
+                                    <StackPanel Orientation="Horizontal">
+                                        <Image Source="Assets/appbar_delete.png" 
+                                        Width="15" Height="15" Margin="5"
+                                        RenderOptions.BitmapScalingMode="HighQuality"/>
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+        </DockPanel>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="10,3">
+            <TextBlock Text="Output: " FontWeight="Bold"/>
+            <TextBlock Name="LoadingOutput" TextTrimming="CharacterEllipsis"/>
+        </StackPanel>
+        <ProgressBar Name="LoadingBar" DockPanel.Dock="Top" Height="10" Margin="20,5,20,5" Foreground="#bdd2ff"/>
+        <TabControl Name="RenameTabControl" BorderBrush="LightGray" BorderThickness="1,1,0,0" SelectionChanged="RenameTabControl_SelectionChanged">
+            <TabItem Style="{DynamicResource DefaultTab}" FocusVisualStyle="{x:Null}" Header="Rename Files">
+                <DockPanel LastChildFill="True">
+                    <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" DockPanel.Dock="Top">
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <Button Name="AddFileButton" Click="AddFileButton_Click" Focusable="False" Style="{DynamicResource DefaultButton}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="Assets/appbar_add.png" 
+                                            Width="15" Height="15" Margin="5"
+                                            RenderOptions.BitmapScalingMode="HighQuality"/>
+                                    <TextBlock Text="Add" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Name="ExcludeFileButton" Click="ExcludeFileButton_Click" Focusable="False" Style="{DynamicResource DefaultButton}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="Assets/appbar_exclude.png" 
+                                            Width="15" Height="15" Margin="5"
+                                            RenderOptions.BitmapScalingMode="HighQuality"/>
+                                    <TextBlock Text="Exclude" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                    <ListView Name="RenameFilesList" BorderThickness="0"
+                              ItemContainerStyle="{StaticResource ListViewItemStyle}" Padding="10,2">
+                        <ListView.View>
+                            <GridView ColumnHeaderContainerStyle="{StaticResource ListViewHeaderStyle}" AllowsColumnReorder="False">
+                                <GridViewColumn Header="Filename" Width="120" DisplayMemberBinding= "{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
+                                <GridViewColumn Header="New Filename" Width="120" DisplayMemberBinding= "{Binding NewName, UpdateSourceTrigger=PropertyChanged}"/>
+                                <GridViewColumn Header="Path" Width="155" DisplayMemberBinding= "{Binding Path, UpdateSourceTrigger=PropertyChanged}"/>
+                                <GridViewColumn Header="Error" Width="150" DisplayMemberBinding= "{Binding Error, UpdateSourceTrigger=PropertyChanged}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </DockPanel>
+            </TabItem>
+            <TabItem Style="{DynamicResource DefaultTab}" FocusVisualStyle="{x:Null}" Header="Rename Folders">
+
+                <DockPanel LastChildFill="True">
+                    <Border BorderBrush="LightGray" BorderThickness="0,0,0,1" DockPanel.Dock="Top">
+                        <StackPanel Orientation="Horizontal" Height="30">
+                            <Button Name="AddFolderButton" Click="AddFolderButton_Click" Focusable="False" Style="{DynamicResource DefaultButton}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="Assets/appbar_add.png" 
+                                            Width="15" Height="15" Margin="5"
+                                            RenderOptions.BitmapScalingMode="HighQuality"/>
+                                    <TextBlock Text="Add" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                </StackPanel>
+                            </Button>
+
+                            <Button Name="ExcludeFolderButton" Click="ExcludeFolderButton_Click" Focusable="False" Style="{DynamicResource DefaultButton}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="Assets/appbar_exclude.png" 
+                                            Width="15" Height="15" Margin="5"
+                                            RenderOptions.BitmapScalingMode="HighQuality"/>
+                                    <TextBlock Text="Exclude" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                    <ListView Name="RenameFoldersList" BorderThickness="0" ItemContainerStyle="{StaticResource ListViewItemStyle}" Padding="10,2">
+                        <ListView.View>
+                            <GridView ColumnHeaderContainerStyle="{StaticResource ListViewHeaderStyle}" AllowsColumnReorder="False">
+                                <GridViewColumn Header="Folder Name" Width="120" DisplayMemberBinding= "{Binding Name, UpdateSourceTrigger=PropertyChanged}"/>
+                                <GridViewColumn Header="New Folder Name" Width="120" DisplayMemberBinding= "{Binding NewName, UpdateSourceTrigger=PropertyChanged}"/>
+                                <GridViewColumn Header="Path" Width="155" DisplayMemberBinding= "{Binding Path, UpdateSourceTrigger=PropertyChanged}"/>
+                                <GridViewColumn Header="Error" Width="150" DisplayMemberBinding= "{Binding Error, UpdateSourceTrigger=PropertyChanged}"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </DockPanel>
+            </TabItem>
+        </TabControl>
+    </DockPanel>
+</Window>
