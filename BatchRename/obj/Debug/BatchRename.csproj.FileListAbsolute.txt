@@ -61,3 +61,4 @@ C:\Users\dainghia\source\repos\BatchRename\BatchRename\obj\Debug\BatchRename.csp
 C:\Users\dainghia\source\repos\BatchRename\BatchRename\obj\Debug\BatchRename.csproj.CoreCompileInputs.cache
 C:\Users\dainghia\source\repos\BatchRename\BatchRename\obj\Debug\BatchRename.exe
 C:\Users\dainghia\source\repos\BatchRename\BatchRename\obj\Debug\BatchRename.pdb
+C:\Users\dainghia\source\repos\BatchRename\BatchRename\obj\Debug\BatchRename.csproj.AssemblyReference.cache
